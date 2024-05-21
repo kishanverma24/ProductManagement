@@ -1,0 +1,35 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+.register-div {
+    height: 550px;
+    width: 500px;
+    display: flex;
+    gap: 20px;
+    color: brown;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: rgb(3, 52, 72);
+  }
+  .register-div input{
+      color: whitesmoke;
+      background-color: brown;
+  }
+  .register-div input .placeholder{
+      color: black;
+  }
+  .register-div hr {
+    width: 250px;
+    
+  }
+  .register-div .button {
+    color: rgb(125, 76, 16);
+    background-color: rgb(10, 32, 6);
+    border-radius: 3px;
+  }
+  

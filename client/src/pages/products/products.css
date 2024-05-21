@@ -1,0 +1,18 @@
+.product {
+  height: 160px;
+  width: 300px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-details {
+  height: 80px;
+  width: 300px;
+  display: flex;
+  gap: 50px;
+  background-color: rgb(191, 129, 139);
+  align-items: center;
+  justify-content: center;
+}
+

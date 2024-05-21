@@ -1,0 +1,40 @@
+.form-container {
+    margin-top: 20px;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 500px;
+  height: 250px;
+  justify-content: space-around;
+  /* background-color: rgb(184, 152, 213); */
+}
+input {
+  height: 50px;
+  width: 493x;
+  background-color: white;
+  border-radius: 5px;
+  border:0cm;
+  color: black;
+  background-color: brown;
+  font-size: medium;
+}
+.buttonclass{
+    cursor: pointer;
+    height: 50px;
+  width: 100%;
+  border-radius: 5px;
+  border:0cm;
+  color: black;
+  background-color: rgb(67, 82, 67);
+}
+
+
+
+

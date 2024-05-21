@@ -1,0 +1,45 @@
+.form-container {
+    margin-top: 20px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .form {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 600px;
+    height: 450px;
+    justify-content: space-around;
+    background-color: rgb(145, 120, 169);
+  }
+  .form h3{
+  margin-top: 10px;
+  }
+  .updateinput {
+    height: 50px;
+    width: 493px;
+    background-color: white;
+    border-radius: 5px;
+    border: 0cm;
+    color: black;
+    background-color: rgb(128, 57, 57);
+    font-size: medium;
+  }
+  .buttonclass {
+    cursor: pointer;
+    height: 50px;
+    width: 50%;
+    border-radius: 5px;
+    border: 0cm;
+    color: black;
+    background-color: rgb(67, 82, 67);
+  }
+  .buttonclass:hover {
+    background-color: rgb(66, 74, 66);
+  }
+  

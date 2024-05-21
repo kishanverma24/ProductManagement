@@ -1,0 +1,21 @@
+.navbar {
+  background-color: black;
+  color: cornflowerblue;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 50px;
+  width: 100%;
+  /* position: fixed; */
+  font-size: 14px;
+  list-style-type: none;
+  z-index: 999;
+  top: 5px;
+}
+li {
+  cursor: pointer;
+}
+.link {
+  text-decoration: none;
+  color: wheat;
+}

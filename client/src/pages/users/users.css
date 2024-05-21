@@ -1,0 +1,19 @@
+.users {
+    height: 160px;
+    width: 300px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .user-details {
+    height: 80px;
+    width: 300px;
+    display: flex;
+    gap: 50px;
+    background-color: rgba(34, 97, 44, 0.779);
+    align-items: center;
+    justify-content: center;
+  }
+  
+  
