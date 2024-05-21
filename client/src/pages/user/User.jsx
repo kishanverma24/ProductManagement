@@ -92,7 +92,7 @@ function User() {
                 ) : (
                   ""
                 )}
-                {user.isAdmin == true && usersearch.isAdmin == true ? (
+                {user.isAdmin == true && usersearch.isAdmin == true && user.isMainAdmin !== true  ? (
                   <div>
                     <h5>Admin: {usersearch.isAdmin ? "true" : "false"}</h5>
                   </div>
@@ -103,7 +103,7 @@ function User() {
                 user.isMainAdmin == true &&
                 usersearch.isMainAdmin !== true ? (
                   <div>
-                    <h5>Admin: {usersearch.isAdmin ? "true" : "false"}</h5>
+                    <h5>isAdmin: {usersearch.isAdmin ? "true" : "false"}</h5>
                     <button onClick={makeAdmin}>UpdateAdmin</button>
                   </div>
                 ) : (

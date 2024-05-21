@@ -4,14 +4,13 @@ import { useState, useContext } from "react";
 import UserContext from "../../context/UserContext";
 import "./profile.css";
 import { useNavigate } from "react-router-dom";
-
+import ProfileProducts from "../../components/profileProducts/ProfileProducts";
 function Profile() {
-  const { user, setUser } = useContext(UserContext);
-  const navigate = useNavigate()
-  function handleAddProduct(){
-    navigate("/addproduct")
+  const { user } = useContext(UserContext);
+  const navigate = useNavigate();
+  function handleAddProduct() {
+    navigate("/addproduct");
   }
-  // console.log(user);
   return (
     <div>
       <Navbar />
@@ -19,7 +18,9 @@ function Profile() {
         <div className="h1">
           <h1>Profile</h1>
         </div>
-        <button onClick={handleAddProduct} className="addbutton">Add</button>
+        <button onClick={handleAddProduct} className="addbutton">
+          Add
+        </button>
         <hr style={{ width: "100%", marginTop: "10px" }} />
 
         <div className="profile">
@@ -30,6 +31,7 @@ function Profile() {
         </div>
         <hr style={{ width: "100%", marginTop: "10px" }} />
       </div>
+      <ProfileProducts />
     </div>
   );
 }

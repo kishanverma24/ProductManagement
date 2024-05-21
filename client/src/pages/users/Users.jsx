@@ -37,7 +37,7 @@ function Users() {
   return (
     <div className="user">
       {users.length > 0 ? (
-        <ul>
+        <ul className="mainadminusers">
           {users.map((item) => (
             <div className="users" key={item.userid}>
               <Link

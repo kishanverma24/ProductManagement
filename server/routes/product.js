@@ -66,6 +66,22 @@ router.get("/allproduct", verifyUser, async (req, res) => {
   }
 });
 
+// Getting all products of current user for profile page
+router.get("/allproduct/:profileid", verifyUser, async (req, res) => {
+  try {
+    const url = req.url;
+    const parts = url.split("/");
+    const profileid = parts[parts.length - 1];
+    const currentUserProducts = await Product.find({ userid: profileid });
+    if (!currentUserProducts) {
+      return res.status(404).json({ message: "Products not found" });
+    }
+    return res.json({ currentUserProducts });
+  } catch (error) {
+    res.status(500).json({ "error while fetching the user products": error.message });
+  }
+});
+
 // Getting single product
 router.get("/product/:id", verifyUser, async (req, res) => {
   try {
@@ -123,7 +139,7 @@ router.put("/update/:id", verifyUser, async (req, res) => {
     const productId = req.params.id;
     const requestedUser = await User.findOne({ userid: requestedUserId });
     const requestedProduct = await Product.findOne({ productid: productId });
-    
+
     if (
       requestedProduct.userid == requestedUser.userid ||
       requestedUser.isAdmin == true

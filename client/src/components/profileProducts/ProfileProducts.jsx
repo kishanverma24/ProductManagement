@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import { Link } from "react-router-dom";
-import "./products.css";
+import "./profileProducts.css"
+import UserContext from "../../context/UserContext";
+
 function Products() {
-  const [products, setProducts] = useState([]);
+  const [profileProducts, setProfileProducts] = useState([]);
   const token = localStorage.getItem("token");
+  const { user } = useContext(UserContext);
+ const profileid = user.userid;
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3001/product/allproduct",
+          `http://localhost:3001/product/allproduct/${profileid}`,
           {
             method: "GET",
             headers: {
@@ -20,8 +24,8 @@ function Products() {
 
         const data = await response.json();
         console.log(data);
-        if (data && data.products) {
-          setProducts(data.products);
+        if (data && data.currentUserProducts) {
+          setProfileProducts(data.currentUserProducts);
         } else {
           console.log("No products found");
         }
@@ -31,15 +35,15 @@ function Products() {
     };
 
     fetchProducts();
-  }, []); // Empty array ensures this effect runs only once after the initial render
+  }, [profileid]); // Empty array ensures this effect runs only once after the initial render
 
   // console.log("Products:", products);
 
   return (
     <div className="">
-      {products.length > 0 ? (
-        <ul className="mainproduct">
-          {products.map((item) => (
+      {profileProducts.length > 0 ? (
+        <ul className="mainprofileproducts">
+          {profileProducts.map((item) => (
             <div className="product" key={item.productid}>
               <Link
                 to={`/product/${item.productid}`}
@@ -54,7 +58,7 @@ function Products() {
           ))}
         </ul>
       ) : (
-        <p>No Products Not Found!</p>
+        <p>No Products Found!</p>
       )}
     </div>
   );

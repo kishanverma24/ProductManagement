@@ -1,3 +1,8 @@
+.mainproduct {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
 .product {
   height: 160px;
   width: 300px;
