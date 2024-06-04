@@ -1,27 +1,9 @@
-import express from "express";
 import { User } from "../models/User.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
-const router = express.Router();
-
-// Middleware to verify user token
-const verifyUser = (req, res, next) => {
-  const token = req.headers.token;
-  if (!token) {
-    return res.status(401).json({ message: "Invalid Admin" });
-  }
-  jwt.verify(token, process.env.User_Key, (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ message: "Invalid token" });
-    }
-    req.userid = decoded.userid;
-    next();
-  });
-};
-
 // Registering User
-router.post("/register", async (req, res) => {
+export const userRegistration = async (req, res) => {
   try {
     const { userid, useremail, userphonenumber, username, password } = req.body;
     const existingUser = await User.findOne({ userid });
@@ -44,10 +26,10 @@ router.post("/register", async (req, res) => {
   } catch (error) {
     return res.status(500).json({ error: "Unable to register a new user" });
   }
-});
+};
 
 // User login
-router.post("/login", async (req, res) => {
+export const userLogin = async (req, res) => {
   try {
     const { userid, password } = req.body;
     if (!userid || !password) {
@@ -86,10 +68,10 @@ router.post("/login", async (req, res) => {
   } catch (error) {
     return res.status(500).json({ error: "Error during login" });
   }
-});
+};
 
 // Getting all users
-router.get("/allusers", verifyUser, async (req, res) => {
+export const getAllUsers = async (req, res) => {
   try {
     const admin = await User.findOne({ userid: req.userid });
     if (!admin.isAdmin) {
@@ -101,10 +83,10 @@ router.get("/allusers", verifyUser, async (req, res) => {
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
-});
+};
 
 // Getting single user
-router.get("/users/:id", verifyUser, async (req, res) => {
+export const getSingleUser = async (req, res) => {
   try {
     const admin = await User.findOne({ userid: req.userid });
     if (!admin.isAdmin) {
@@ -119,10 +101,10 @@ router.get("/users/:id", verifyUser, async (req, res) => {
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
-});
+};
 
 // Deleting user
-router.delete("/users/:id", verifyUser, async (req, res) => {
+export const deleteUser = async (req, res) => {
   try {
     const admin = await User.findOne({ userid: req.userid });
     if (!admin.isAdmin) {
@@ -137,10 +119,10 @@ router.delete("/users/:id", verifyUser, async (req, res) => {
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
-});
+};
 
 // Updating user
-router.put("/users/:id", verifyUser, async (req, res) => {
+export const updateUser = async (req, res) => {
   try {
     const { useremail, userphonenumber, username, password } = req.body;
     const admin = await User.findOne({ userid: req.userid });
@@ -157,7 +139,7 @@ router.put("/users/:id", verifyUser, async (req, res) => {
     if (user.isAdmin == true && admin.isMainAdmin == false) {
       return res
         .status(403)
-        .json("You are not authorized to make changes in the admin profile")
+        .json("You are not authorized to make changes in the admin profile");
     }
     const hashPassword = password
       ? await bcrypt.hash(password, 10)
@@ -177,10 +159,10 @@ router.put("/users/:id", verifyUser, async (req, res) => {
   } catch (error) {
     return res.status(500).json({ error: "Unable to update user" });
   }
-});
+};
 
 // Admin Update
-router.put("/users/admin/:id", verifyUser, async (req, res) => {
+export const updateAdmin = async (req, res) => {
   try {
     const admin = await User.findOne({ userid: req.userid });
     if (!admin.isAdmin && !admin.isMainAdmin) {
@@ -208,10 +190,10 @@ router.put("/users/admin/:id", verifyUser, async (req, res) => {
   } catch (error) {
     return res.status(500).json({ error: "Unable to update user" });
   }
-});
+};
 
 // User logout
-router.post("/logout", verifyUser, (req, res) => {
+export const userLogout = async (req, res) => {
   try {
     console.log("Cookies before clearing:", req.cookies);
     res.clearCookie("token", { path: "/" });
@@ -220,6 +202,4 @@ router.post("/logout", verifyUser, (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Error during logout" });
   }
-});
-
-export { router as AdminRouter, verifyUser };
+};

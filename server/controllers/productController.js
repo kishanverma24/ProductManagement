@@ -1,31 +1,8 @@
-import express from "express";
 import { Product } from "../models/Product.js";
 import { User } from "../models/User.js";
-import jwt from "jsonwebtoken";
-
-const router = express.Router();
-
-// Middleware to verify user token
-const verifyUser = (req, res, next) => {
-  const token = req.headers.token;
-  // console.log(token);
-  if (!token) {
-    return res.status(401).json({ message: "Invalid User" });
-  } else {
-    jwt.verify(token, process.env.User_Key, (err, decoded) => {
-      if (err) {
-        return res.status(401).json({ message: "Invalid token" });
-      } else {
-        req.userid = decoded.userid;
-        // console.log(req.userid);
-        next();
-      }
-    });
-  }
-};
 
 // Adding Product
-router.post("/add", verifyUser, async (req, res) => {
+export const addingProduct = async (req, res) => {
   try {
     const { productid, productnumber, productname } = req.body;
     const existingProduct = await Product.findOne({ productid });
@@ -50,12 +27,11 @@ router.post("/add", verifyUser, async (req, res) => {
   } catch (error) {
     return res.status(500).json({ error: "Unable to register a new product" });
   }
-});
+};
 
 // Getting all products
-router.get("/allproduct", verifyUser, async (req, res) => {
+export const getAllProduct = async (req, res) => {
   try {
-    // console.log(req.userid);
     const products = await Product.find();
     if (!products) {
       return res.status(404).json({ message: "Products not found" });
@@ -64,10 +40,10 @@ router.get("/allproduct", verifyUser, async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-});
+};
 
-// Getting all products of current user for profile page
-router.get("/allproduct/:profileid", verifyUser, async (req, res) => {
+// Profile Page Product
+export const getProfilePageProduct = async (req, res) => {
   try {
     const url = req.url;
     const parts = url.split("/");
@@ -78,19 +54,18 @@ router.get("/allproduct/:profileid", verifyUser, async (req, res) => {
     }
     return res.json({ currentUserProducts });
   } catch (error) {
-    res.status(500).json({ "error while fetching the user products": error.message });
+    res
+      .status(500)
+      .json({ "error while fetching the user products": error.message });
   }
-});
+};
 
 // Getting single product
-router.get("/product/:id", verifyUser, async (req, res) => {
+export const getSingleProduct = async (req, res) => {
   try {
     const url = req.url;
     const parts = url.split("/");
     const productid = parts[parts.length - 1];
-    // console.log(url);
-    // const { productid } = req.params.id;
-    // console.log(productid);
     const searchedProduct = await Product.findOne({ productid: productid });
     if (!searchedProduct) {
       return res.status(404).json({ message: "Product not found" });
@@ -99,10 +74,10 @@ router.get("/product/:id", verifyUser, async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-});
+};
 
 // Deleting Product
-router.delete("/delete/:id", verifyUser, async (req, res) => {
+export const deleteProduct = async (req, res) => {
   try {
     const url = req.url;
     const parts = url.split("/");
@@ -129,10 +104,10 @@ router.delete("/delete/:id", verifyUser, async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-});
+};
 
 // Updating product
-router.put("/update/:id", verifyUser, async (req, res) => {
+export const updateProduct = async (req, res) => {
   try {
     const { productname, productnumber } = req.body;
     const requestedUserId = req.userid;
@@ -157,6 +132,4 @@ router.put("/update/:id", verifyUser, async (req, res) => {
   } catch (error) {
     return res.status(500).json({ error: "Unable to update a product" });
   }
-});
-
-export { router as ProductRouter, verifyUser };
+};

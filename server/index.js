@@ -3,8 +3,8 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import "./seed.js"; // Ensure this file exists and is correctly exporting needed functionality
 import "./db.js"; // Ensure this file exists and is correctly connecting to the database
-import { AdminRouter } from "./routes/auth.js";
-import { ProductRouter } from "./routes/product.js";
+import AuthRouter from "./routes/authRouter.js";
+import ProductRouter from "./routes/productRouter.js";
 import cors from "cors";
 
 // Load environment variables from .env file
@@ -24,7 +24,7 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-app.use("/auth", AdminRouter);
+app.use("/auth", AuthRouter);
 app.use("/product", ProductRouter);
 
 // Catch-all route for 404

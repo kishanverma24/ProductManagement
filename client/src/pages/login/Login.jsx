@@ -38,7 +38,7 @@ function Login() {
         navigate("/");
       }
     } catch (error) {
-      console.log("client erroe", error);
+      console.log("client error", error);
     }
   };
 
